@@ -858,7 +858,7 @@
             if (e.key === 'Escape') closeModal();
         });
 
-        // FIXED DOWNLOAD FUNCTION
+        // DOWNLOAD FUNCTION
         function downloadApp(appId) {
             const app = apps.find(a => a.id === appId);
             closeModal();
@@ -886,7 +886,8 @@
             const grid = document.getElementById('appGrid');
             grid.innerHTML = '<div class="status-message">⏳ Loading modded apps…</div>';
             try {
-                const response = await fetch('apkguru-data.json');
+                // ✅ FIXED: Use exact filename with capital A
+                const response = await fetch('Apkguru-data.json');
                 if (!response.ok) throw new Error('Failed to fetch JSON');
                 const data = await response.json();
                 apps = data;
@@ -894,7 +895,7 @@
             } catch (error) {
                 grid.innerHTML = `
                     <div class="status-message error" style="grid-column:1/-1;">
-                        ❌ Could not load app data. Make sure <code>apkguru-data.json</code> is in the same folder.
+                        ❌ Could not load app data. Make sure <code>Apkguru-data.json</code> is in the same folder.
                     </div>`;
             }
         }
