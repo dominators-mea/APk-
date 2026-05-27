@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApkGuru - Premium Modded APKs</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --card-bg: #12121a;
+            --card-hover: #1a1a28;
+            --accent: #00e676;
+            --accent2: #7c4dff;
+            --text: #e0e0e0;
+            --text-muted: #999;
+            --border: #1e1e2e;
+            --badge-bg: #1b1b2a;
+            --danger: #ff5252;
+            --warning: #ffab40;
+            --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(124, 77, 255, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 90%, rgba(0, 230, 118, 0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 50%, rgba(100, 100, 200, 0.02) 0%, transparent 80%);
+        }
+
+        header {
+            background: rgba(10, 10, 18, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .header-inner {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+            gap: 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent2), #651fff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 4px 15px rgba(124, 77, 255, 0.35);
+            overflow: hidden;
+        }
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .logo span {
+            background: linear-gradient(135deg, #fff, #ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .logo .accent-dot {
+            -webkit-text-fill-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 440px;
+            position: relative;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 11px 18px 11px 46px;
+            border-radius: 28px;
+            border: 1.5px solid var(--border);
+            background: var(--card-bg);
+            color: #fff;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        .search-bar input:focus {
+            border-color: var(--accent2);
+            box-shadow: 0 0 0 4px rgba(124, 77, 255, 0.08);
+            background: #181824;
+        }
+        .search-bar input::placeholder {
+            color: #666;
+        }
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+            pointer-events: none;
+            font-size: 1.1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn {
+            padding: 9px 18px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: #ccc;
+        }
+        .btn-outline:hover {
+            border-color: var(--accent2);
+            color: #fff;
+            background: rgba(124, 77, 255, 0.05);
+        }
+        .btn-primary {
+            background: var(--accent2);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(124, 77, 255, 0.3);
+        }
+        .btn-primary:hover {
+            background: #8e63ff;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(124, 77, 255, 0.4);
+        }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            border-radius: 20px;
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            box-shadow: 0 4px 16px rgba(0, 230, 118, 0.25);
+        }
+        .btn-accent:hover {
+            background: #00ff85;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(0, 230, 118, 0.35);
+        }
+
+        nav {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 14px 0;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .nav-tag {
+            padding: 8px 16px;
+            border-radius: 22px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: var(--card-bg);
+            border: 1px solid transparent;
+            transition: all 0.25s ease;
+            color: #aaa;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .nav-tag:hover {
+            color: #fff;
+            border-color: #444;
+            background: #1a1a2a;
+        }
+        .nav-tag.active {
+            background: var(--accent2);
+            color: #fff;
+            border-color: var(--accent2);
+            font-weight: 600;
+            box-shadow: 0 2px 12px rgba(124, 77, 255, 0.3);
+        }
+        .nav-tag.hot::after {
+            content: '🔥';
+            margin-left: 4px;
+            font-size: 0.7rem;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px 24px 40px;
+        }
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.3px;
+        }
+        .section-title .icon {
+            font-size: 1.5rem;
+        }
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            margin-top: -12px;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 18px;
+        }
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .app-card:hover {
+            background: var(--card-hover);
+            border-color: #333;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        .app-card.featured {
+            border-color: rgba(124, 77, 255, 0.3);
+            background: linear-gradient(160deg, #151525 0%, #12121f 100%);
+        }
+        .app-card.featured::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 100px;
+            height: 100px;
+            background: var(--accent2);
+            filter: blur(50px);
+            opacity: 0.15;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .card-badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 5px 10px;
+            border-radius: 14px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            z-index: 1;
+            text-transform: uppercase;
+        }
+        .badge-mod {
+            background: var(--accent2);
+            color: #fff;
+        }
+        .badge-new {
+            background: var(--accent);
+            color: #000;
+        }
+        .badge-hot {
+            background: var(--danger);
+            color: #fff;
+        }
+        .badge-premium {
+            background: var(--warning);
+            color: #000;
+        }
+        .app-icon-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .app-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1e1e35, #252540);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+        }
+        .app-icon .emoji-icon {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        .app-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .app-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .app-dev {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .app-version {
+            font-size: 0.7rem;
+            color: #777;
+            margin-top: 2px;
+        }
+        .mod-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .mod-tag {
+            font-size: 0.68rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: var(--badge-bg);
+            color: #bbb;
+            border: 1px solid #2a2a3a;
+            white-space: nowrap;
+        }
+        .mod-tag.gold {
+            color: #ffd740;
+            border-color: #3d3520;
+            background: #1e1b10;
+        }
+        .mod-tag.green {
+            color: #69f0ae;
+            border-color: #1a3a2a;
+            background: #0e1a12;
+        }
+        .card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .file-size {
+            font-size: 0.75rem;
+            color: #777;
+            white-space: nowrap;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            color: #ffab40;
+        }
+        .download-count {
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #151528 0%, #1a1030 40%, #0f1a1a 100%);
+            border-radius: 20px;
+            padding: 28px 32px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            right: -60px;
+            top: -60px;
+            width: 200px;
+            height: 200px;
+            background: var(--accent2);
+            filter: blur(80px);
+            opacity: 0.2;
+            border-radius: 50%;
+        }
+        .hero-text {
+            flex: 1;
+            min-width: 200px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-text h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .hero-text p {
+            color: #aaa;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+        .hero-highlight {
+            color: var(--accent);
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+        .stat-item {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 150px;
+        }
+        .stat-icon {
+            font-size: 1.8rem;
+        }
+        .stat-val {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: #fff;
+        }
+        .modal h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        .modal .mod-features {
+            margin: 14px 0;
+        }
+        .modal .btn {
+            width: 100%;
+            justify-content: center;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 28px;
+            margin-top: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 24px;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+        .info-note {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin-top: 30px;
+            font-size: 0.78rem;
+            color: #999;
+            text-align: center;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e1e30;
+            color: #fff;
+            padding: 14px 24px;
+            border-radius: 28px;
+            font-weight: 600;
+            z-index: 3000;
+            border: 1px solid var(--accent2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .status-message {
+            text-align: center;
+            padding: 60px 20px;
+            color: #aaa;
+        }
+        .error {
+            color: #ff5252;
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-wrap: wrap;
+                height: auto;
+                padding: 10px 0;
+                gap: 10px;
+            }
+            .search-bar {
+                order: 3;
+                max-width: 100%;
+                flex: 100%;
+            }
+            .app-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 12px;
+            }
+            .hero-banner {
+                padding: 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-inner">
+            <a class="logo" href="#">
+                <div class="logo-icon"></div>
+                <span>Apk<span class="accent-dot">Guru</span></span>
+            </a>
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Search modded apps & games..." oninput="filterApps()">
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-outline btn-sm" onclick="showToast('📩 Request sent!')">📩 Request</button>
+                <button class="btn btn-primary btn-sm" onclick="showToast('🔔 You are up to date!')">🔔 Updates</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" style="padding-bottom:0;">
+        <nav id="categoryNav">
+            <span class="nav-tag active" data-cat="all">📱 All Mods</span>
+            <span class="nav-tag hot" data-cat="games">🎮 Games</span>
+            <span class="nav-tag" data-cat="tools">🛠️ Tools</span>
+            <span class="nav-tag" data-cat="entertainment">🎬 Entertainment</span>
+            <span class="nav-tag" data-cat="social">💬 Social</span>
+            <span class="nav-tag" data-cat="productivity">📊 Productivity</span>
+            <span class="nav-tag hot" data-cat="premium">💎 Premium Unlocked</span>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="hero-banner">
+            <div class="hero-text">
+                <h2>🔥 <span class="hero-highlight">Premium Modded</span> APKs</h2>
+                <p>Unlimited coins, god mode, unlocked premium — updated daily.</p>
+            </div>
+            <div style="font-size:4rem;position:relative;z-index:1;">🛡️</div>
+        </div>
+
+        <div class="stats-row">
+            <div class="stat-item">
+                <span class="stat-icon">📦</span>
+                <div><div class="stat-val" id="totalApps">…</div><div class="stat-label">Modded APKs</div></div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">⬇️</span>
+                <div><div class="stat-val">8.5M+</div><div class="stat-label">Total Downloads</div></div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">✅</span>
+                <div><div class="stat-val">100%</div><div class="stat-label">Tested</div></div>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">🕐</span>
+                <div><div class="stat-val">Daily</div><div class="stat-label">Updates</div></div>
+            </div>
+        </div>
+
+        <div class="section-title"><span class="icon">⭐</span> Featured Mods</div>
+        <div class="section-subtitle">Hand-picked modded APKs with the best features</div>
+        <div class="app-grid" id="appGrid">
+            <div class="status-message">Loading apps…</div>
+        </div>
+
+        <div class="info-note">
+            <strong>Note:</strong> All files are provided by users. Download at your own risk. Always scan files before installing.
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 ApkGuru. All trademarks belong to their respective owners.</p>
+    </footer>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalInner"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const siteConfig = {
+            logoIcon: '📦'
+        };
+        document.querySelector('.logo-icon').innerHTML = siteConfig.logoIcon;
+
+        let apps = [];
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        function isImageUrl(icon) {
+            return icon && (icon.startsWith('http://') || icon.startsWith('https://') || icon.startsWith('data:image/') || /\.(png|jpg|jpeg|gif|svg|webp)(\?.*)?$/i.test(icon));
+        }
+
+        function createIconHTML(icon) {
+            if (isImageUrl(icon)) {
+                return `<img src="${icon}" alt="app icon" onerror="this.parentElement.innerHTML='<span class=\'emoji-icon\'>📱</span>'">`;
+            } else {
+                return `<span class="emoji-icon">${icon || '📱'}</span>`;
+            }
+        }
+
+        function renderApps() {
+            const grid = document.getElementById('appGrid');
+            if (!apps.length) {
+                grid.innerHTML = `<div class="status-message">No apps loaded yet.</div>`;
+                return;
+            }
+
+            let filtered = apps;
+
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(a => a.category === currentCategory);
+            }
+
+            if (searchQuery.trim()) {
+                const q = searchQuery.toLowerCase();
+                filtered = filtered.filter(a =>
+                    a.name.toLowerCase().includes(q) ||
+                    a.dev.toLowerCase().includes(q) ||
+                    a.features.some(f => f.toLowerCase().includes(q)) ||
+                    a.category.toLowerCase().includes(q)
+                );
+            }
+
+            document.getElementById('totalApps').textContent = apps.length + '+';
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#777;">
+                        <div style="font-size:3rem;margin-bottom:12px;">🔍</div>
+                        <p style="font-size:1.1rem;">No mods found matching your search.</p>
+                    </div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(app => {
+                const iconHtml = createIconHTML(app.icon);
+                return `
+                <div class="app-card ${app.featured ? 'featured' : ''}" onclick="openModal(${app.id})">
+                    <span class="card-badge badge-${app.badge}">${app.badgeText}</span>
+                    <div class="app-icon-row">
+                        <div class="app-icon">${iconHtml}</div>
+                        <div class="app-info">
+                            <div class="app-name">${app.name}</div>
+                            <div class="app-dev">${app.dev}</div>
+                            <div class="app-version">${app.version}</div>
+                        </div>
+                    </div>
+                    <div class="mod-features">
+                        ${app.features.slice(0,3).map(f => {
+                            const tagClass = f.toLowerCase().includes('unlimited') || f.toLowerCase().includes('all') ? 'gold' :
+                                              f.toLowerCase().includes('no') || f.toLowerCase().includes('god') ? 'green' : '';
+                            return `<span class="mod-tag ${tagClass}">${f}</span>`;
+                        }).join('')}
+                        ${app.features.length > 3 ? `<span class="mod-tag">+${app.features.length - 3} more</span>` : ''}
+                    </div>
+                    <div class="card-bottom">
+                        <span class="file-size">📦 ${app.size}</span>
+                        <span class="rating">⭐ ${app.rating}</span>
+                        <span class="download-count">⬇ ${app.downloads}</span>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function filterApps() {
+            searchQuery = document.getElementById('searchInput').value;
+            renderApps();
+        }
+
+        document.getElementById('categoryNav').addEventListener('click', function(e) {
+            if (e.target.classList.contains('nav-tag')) {
+                document.querySelectorAll('.nav-tag').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                currentCategory = e.target.dataset.cat;
+                renderApps();
+            }
+        });
+
+        function openModal(appId) {
+            const app = apps.find(a => a.id === appId);
+            if (!app) return;
+            const modalInner = document.getElementById('modalInner');
+            const iconHtml = createIconHTML(app.icon);
+            modalInner.innerHTML = `
+                <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+                    <div class="app-icon" style="width:60px;height:60px;border-radius:16px;font-size:2rem;">${iconHtml}</div>
+                    <div>
+                        <h3 style="margin:0;">${app.name}</h3>
+                        <p style="color:#999;margin:0;">${app.dev} • ${app.version}</p>
+                        <span class="card-badge badge-${app.badge}" style="position:static;display:inline-block;margin-top:6px;">${app.badgeText}</span>
+                    </div>
+                </div>
+                <p style="color:#ccc;margin-bottom:12px;">${app.description}</p>
+                <div class="mod-features" style="margin-bottom:8px;">
+                    ${app.features.map(f => {
+                        const tagClass = f.toLowerCase().includes('unlimited') || f.toLowerCase().includes('all') ? 'gold' :
+                                          f.toLowerCase().includes('no') || f.toLowerCase().includes('god') ? 'green' : '';
+                        return `<span class="mod-tag ${tagClass}" style="font-size:0.78rem;">✅ ${f}</span>`;
+                    }).join('')}
+                </div>
+                <div style="display:flex;gap:20px;color:#888;font-size:0.85rem;margin:12px 0;">
+                    <span>📦 ${app.size}</span>
+                    <span>⭐ ${app.rating}</span>
+                    <span>⬇ ${app.downloads} downloads</span>
+                </div>
+                <button class="btn btn-accent" onclick="downloadApp('${app.id}')">⬇️ Download APK</button>
+            `;
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function downloadApp(appId) {
+            const app = apps.find(a => a.id === appId);
+            closeModal();
+            if (!app) return;
+
+            if (app.downloadUrl && app.downloadUrl.trim() !== '') {
+                window.open(app.downloadUrl, '_blank');
+                showToast(`📥 Download started for ${app.name}`);
+            } else {
+                showToast(`📥 No download link available`);
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        async function loadApps() {
+            const grid = document.getElementById('appGrid');
+            grid.innerHTML = '<div class="status-message">⏳ Loading modded apps…</div>';
+            try {
+                const response = await fetch('Apkguru-data.json');
+                if (!response.ok) throw new Error('Failed to fetch JSON');
+                const data = await response.json();
+                apps = data;
+                renderApps();
+            } catch (error) {
+                grid.innerHTML = `
+                    <div class="status-message error" style="grid-column:1/-1;">
+                        ❌ Could not load app data. Make sure <code>Apkguru-data.json</code> is in the same folder.
+                    </div>`;
+            }
+        }
+
+        loadApps();
+    </script>
+</body>
+</html>
