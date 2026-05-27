@@ -839,7 +839,8 @@
                     <span>⭐ ${app.rating}</span>
                     <span>⬇ ${app.downloads} downloads</span>
                 </div>
-                <button class="btn btn-accent" onclick="downloadApp('${app.id}')">⬇️ Download APK</button>
+                <!-- FIX: Pass ID as number, not string -->
+                <button class="btn btn-accent" onclick="downloadApp(${app.id})">⬇️ Download APK</button>
             `;
             document.getElementById('modalOverlay').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -858,11 +859,13 @@
             if (e.key === 'Escape') closeModal();
         });
 
-        // DOWNLOAD FUNCTION
         function downloadApp(appId) {
             const app = apps.find(a => a.id === appId);
             closeModal();
-            if (!app) return;
+            if (!app) {
+                showToast('❌ App not found.');
+                return;
+            }
 
             if (app.downloadUrl && app.downloadUrl.trim() !== '') {
                 window.location.href = app.downloadUrl;
@@ -886,7 +889,7 @@
             const grid = document.getElementById('appGrid');
             grid.innerHTML = '<div class="status-message">⏳ Loading modded apps…</div>';
             try {
-                // ✅ FIXED: Use exact filename with capital A
+                // Matches your file name exactly (capital A)
                 const response = await fetch('Apkguru-data.json');
                 if (!response.ok) throw new Error('Failed to fetch JSON');
                 const data = await response.json();
